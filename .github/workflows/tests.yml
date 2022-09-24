@@ -40,6 +40,13 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Install Composer dependencies
         run: composer install
+      # —— Npm ——————————————————————————————————————————————————————————
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm run build --if-present
       # —— Symfony ——————————————————————————————————————————————————————————
       - name: Check Symfony requirements
         run: vendor/bin/requirements-checker
@@ -55,7 +62,7 @@ jobs:
         run: |
           cp .env.ci .env.test
           cp .env.ci .env
-          cp phpunit.ci.xml phpunit.xml
+          cp phpunit.ci.xml phpunit.xml.dist
           composer test
       ## —— Tests code coverage ✅check ———————————————————————————————————————————————————————————
       - name: Check test coverage
