@@ -26,6 +26,13 @@ jobs:
           update: true
       - name: Check PHP Version
         run: php -v
+      # —— MYSQL —————————————————————————————————————————————————————————
+      - name: Set up Mysql
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE slotify_test;'  -uroot -proot
+          mysql -e "CREATE USER 'slotifyUser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'slotifyPassword';"  -uroot -proot
+          mysql -e "GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON slotify_test.* TO 'slotifyUser'@'localhost';"  -uroot -proot
       # —— Composer —————————————————————————————————————————————————————————
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -63,11 +70,5 @@ jobs:
           cp .env.ci .env.test
           cp .env.ci .env
           cp phpunit.ci.xml phpunit.xml.dist
+          composer database-test
           composer test
-      ## —— Tests code coverage ✅check ———————————————————————————————————————————————————————————
-      - name: Check test coverage
-        id: test-coverage
-        uses: johanvanhelden/gha-clover-test-coverage-check@v1
-        with:
-          percentage: "95"
-          filename: "coverage.xml"
