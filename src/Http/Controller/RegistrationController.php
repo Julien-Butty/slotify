@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Http\Controller;
 
-use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Domain\Auth\Entity\User;
+use App\Http\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
