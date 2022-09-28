@@ -38,7 +38,7 @@ class RegistrationController extends AbstractController
 
                 $this->addFlash('success', 'Welcome ! Your account has been successfully created.');
 
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('home');
             } catch (Exception $e) {
                 throw new Exception($e->getMessage());
             }
