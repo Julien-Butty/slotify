@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+    <div class="grid place-items-center h-screen w-screen">
+        <div class="">
+            <div class="md:col-span-1">
+                <div class="px-4 sm:px-0">
+                    <h3 class="text-lg font-mono font-medium leading-6 text-gray-900">Log In to your account</h3>
+                    <p class="mt-1 text-sm text-indigo-600"><a href="{{ path('register') }}">Create an account</a></p>
+                </div>
+            </div>
+            {% if error %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Holy smokes!</strong>
+                    <span class="block sm:inline">{{ error.messageKey | trans(error.messageData, 'security') }} </span>
+                </div>
+            {% endif %}
+            <br><br>
+            <div class="mt-5 md:col-span-2 md:mt-0">
+                <form action="{{ path('login') }}" method="POST">
+                    <div class="overflow-hidden shadow-2xl shadow-indigo-900 sm:rounded-md">
+                        <div class="bg-white px-4 py-5 sm:p-6">
+                            <div class="grid grid-cols-6 gap-6">
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="first-name"
+                                           class="block text-sm font-medium text-gray-700">Email</label>
+                                    <input type="text" value="{{ last_username }}" name="_username" id="username"
+                                           class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                           required autofocus>
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="last-name"
+                                           class="block text-sm font-medium text-gray-700">Password</label>
+                                    <input type="password" name="_password" id="inputPassword"
+                                           class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                           required>
+                                </div>
+                                <div class="">
+                                    <input type="checkbox"
+                                           class="form-check-input h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                           id="rememberMe" name="_remember_me">
+                                    <label class=" form-check-label text-sm font-medium text-gray-700" for="rememberMe">Se
+                                        souvenir de moi</label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                            <button type="submit"
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
